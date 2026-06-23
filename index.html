@@ -471,11 +471,13 @@
   .packages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 68px; }
   .pkg-card {
     border: 1px solid rgba(210,177,143,0.1); padding: 46px 38px;
-    position: relative; transition: border-color 0.3s, transform 0.3s;
+    position: relative; transition: border-color 0.3s, transform 0.3s, background 0.3s, box-shadow 0.3s;
     background: rgba(81,43,101,0.1);
   }
-  .pkg-card:hover { border-color: rgba(210,177,143,0.32); transform: translateY(-5px); }
-  .pkg-card.featured { background: var(--purple); border-color: var(--gold); }
+  .pkg-card:hover {
+    border-color: var(--gold); background: var(--purple);
+    transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+  }
   .pkg-badge {
     position: absolute; top: -1px; right: 30px;
     background: var(--gold); color: var(--purple-deep);
@@ -510,27 +512,35 @@
 
   /* TEAM */
   .team { background: linear-gradient(180deg, #1e0c2c 0%, var(--purple-deep) 100%); }
-  .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 68px; }
+  .team-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; margin-top: 68px; }
   .team-card {
-    background: rgba(81,43,101,0.18); padding: 40px 28px;
+    background: rgba(81,43,101,0.18); padding: 36px 20px;
     border: 1px solid rgba(210,177,143,0.07); text-align: center;
     transition: background 0.3s;
   }
   .team-card:hover { background: rgba(81,43,101,0.38); }
+  .team-photo-frame { position: relative; width: 84px; height: 84px; margin: 0 auto 20px; }
+  .team-photo {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    border-radius: 50%; object-fit: cover;
+    border: 1px solid rgba(210,177,143,0.25);
+    transition: border-color 0.3s;
+  }
+  .team-card:hover .team-photo { border-color: rgba(210,177,143,0.5); }
   .team-icon-wrap {
-    width: 56px; height: 56px; margin: 0 auto 20px;
+    width: 84px; height: 84px;
     display: flex; align-items: center; justify-content: center;
     border: 1px solid rgba(210,177,143,0.2); border-radius: 50%;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s; background: rgba(81,43,101,0.3);
   }
   .team-card:hover .team-icon-wrap { border-color: rgba(210,177,143,0.5); }
   .team-icon-wrap svg {
-    width: 26px; height: 26px;
+    width: 30px; height: 30px;
     stroke: var(--gold); stroke-width: 1.4; fill: none;
     stroke-linecap: round; stroke-linejoin: round;
   }
-  .team-role { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; font-weight: 500; }
-  .team-name { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 400; margin-bottom: 14px; }
+  .team-role { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; font-weight: 500; }
+  .team-name { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 400; margin-bottom: 14px; }
   .team-skills { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
   .team-skill {
     font-size: 9px; color: rgba(250,248,245,0.4);
@@ -547,6 +557,13 @@
   }
   .ref-card:hover { border-color: rgba(210,177,143,0.3); background: rgba(81,43,101,0.3); }
   .ref-logo-row { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+  .ref-logo-frame { position: relative; width: 52px; height: 52px; flex-shrink: 0; }
+  .ref-logo-img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    border-radius: 50%; object-fit: contain; padding: 7px;
+    background: rgba(250,248,245,0.95);
+    border: 1px solid rgba(210,177,143,0.3);
+  }
   .ref-logo-placeholder {
     width: 52px; height: 52px; border-radius: 50%;
     border: 1px solid rgba(210,177,143,0.3);
@@ -574,13 +591,25 @@
   }
   .project-card:hover { border-color: rgba(210,177,143,0.35); transform: translateY(-4px); }
   .project-thumb {
-    height: 200px; position: relative; overflow: hidden;
+    height: 220px; position: relative; overflow: hidden;
     background: linear-gradient(135deg, rgba(81,43,101,0.6) 0%, rgba(38,17,49,0.9) 100%);
     display: flex; align-items: center; justify-content: center;
   }
-  .project-thumb svg { width: 52px; height: 52px; stroke: rgba(210,177,143,0.35); stroke-width: 1.2; fill: none; }
+  .project-thumb-img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 1;
+  }
+  .project-thumb::after {
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, rgba(38,17,49,0) 40%, rgba(38,17,49,0.55) 100%);
+    pointer-events: none;
+  }
+  .project-thumb svg {
+    width: 52px; height: 52px; stroke: rgba(210,177,143,0.35); stroke-width: 1.2; fill: none;
+    position: relative; z-index: 0;
+  }
   .project-platform-badge {
-    position: absolute; top: 16px; right: 16px;
+    position: absolute; top: 16px; right: 16px; z-index: 3;
     font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
     color: var(--purple-deep); background: var(--gold);
     padding: 5px 12px; font-weight: 700;
@@ -735,6 +764,11 @@
   }
   .mobile-menu a:hover { color: var(--gold); }
 
+  /* TEAM - tablet ara breakpoint (5 kart → 3 sütun) */
+  @media (max-width: 1100px) and (min-width: 901px) {
+    .team-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
   @media (max-width: 900px) {
     /* NAV */
     nav { padding: 14px 20px; }
@@ -771,8 +805,11 @@
     /* SERVICES */
     .services-header { grid-template-columns: 1fr; gap: 20px; margin-bottom: 40px; }
     .services-grid { grid-template-columns: 1fr; gap: 1px; }
-    .service-card { padding: 32px 24px; }
-    .service-arrow { opacity: 1; transform: none; }
+    .service-card { padding: 32px 24px; display: flex; flex-direction: column; }
+    .service-arrow {
+      position: static; align-self: flex-end;
+      margin-top: 20px; opacity: 1; transform: none !important;
+    }
     .service-icon-wrap { width: 40px; height: 40px; margin-bottom: 18px; }
     .service-icon-wrap svg { width: 36px; height: 36px; }
     .service-name { font-size: 22px; }
@@ -796,6 +833,9 @@
     /* TEAM */
     .team-grid { grid-template-columns: repeat(2, 1fr); gap: 1px; margin-top: 40px; }
     .team-card { padding: 28px 16px; }
+    .team-photo-frame { width: 68px; height: 68px; }
+    .team-icon-wrap { width: 68px; height: 68px; }
+    .team-icon-wrap svg { width: 24px; height: 24px; }
     .team-name { font-size: 17px; }
     .team-skill { font-size: 8px; }
 
@@ -1087,36 +1127,59 @@
   <h2 class="section-title reveal">Beş uzmanlık,<br><em>bir vizyon.</em></h2>
   <div class="team-grid">
     <div class="team-card reveal">
-      <div class="team-icon-wrap">
-        <svg viewBox="0 0 26 26"><path d="M13 3 L16 9 L22 10 L17.5 14.5 L18.5 21 L13 18 L7.5 21 L8.5 14.5 L4 10 L10 9 Z"/></svg>
+      <div class="team-photo-frame">
+        <img class="team-photo" src="https://raw.githubusercontent.com/hipotezyum-arch/torqua-verce/refs/heads/main/emre.jpg" alt="PR & Reklamcılık uzmanı (temsili fotoğraf)" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="team-icon-wrap" style="display:none;">
+          <svg viewBox="0 0 26 26"><path d="M13 3 L16 9 L22 10 L17.5 14.5 L18.5 21 L13 18 L7.5 21 L8.5 14.5 L4 10 L10 9 Z"/></svg>
+        </div>
       </div>
-      <div class="team-role">Strateji & İletişim</div>
+      <div class="team-role">Emre</div>
       <h3 class="team-name">PR & Reklamcılık</h3>
-      <div class="team-skills"><span class="team-skill">Medya Planlaması</span><span class="team-skill">PR Stratejisi</span><span class="team-skill">Marka Mimarisi</span></div>
+      <div class="team-skills"><span class="team-skill">Medya Planlaması</span><span class="team-skill">PR Stratejisi</span><span class="team-skill">Kriz İletişimi</span></div>
     </div>
     <div class="team-card reveal">
-      <div class="team-icon-wrap">
-        <svg viewBox="0 0 26 26"><rect x="3" y="3" width="20" height="20" rx="2"/><line x1="3" y1="9" x2="23" y2="9"/><line x1="9" y1="9" x2="9" y2="23"/></svg>
+      <div class="team-photo-frame">
+        <img class="team-photo" src="https://raw.githubusercontent.com/hipotezyum-arch/torqua-verce/refs/heads/main/mustafa.jpg" alt="Developer & Tasarımcı (temsili fotoğraf)" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="team-icon-wrap" style="display:none;">
+          <svg viewBox="0 0 26 26"><rect x="3" y="3" width="20" height="20" rx="2"/><line x1="3" y1="9" x2="23" y2="9"/><line x1="9" y1="9" x2="9" y2="23"/></svg>
+        </div>
       </div>
-      <div class="team-role">Tasarım & Geliştirme</div>
+      <div class="team-role">Mustafa</div>
       <h3 class="team-name">Developer & Tasarımcı</h3>
-      <div class="team-skills"><span class="team-skill">Web Geliştirme</span><span class="team-skill">UI/UX</span><span class="team-skill">Dashboard</span></div>
+      <div class="team-skills"><span class="team-skill">Web Geliştirme</span><span class="team-skill">UI/UX</span><span class="team-skill">Görsel Kimlik</span></div>
     </div>
     <div class="team-card reveal">
-      <div class="team-icon-wrap">
-        <svg viewBox="0 0 26 26"><circle cx="13" cy="13" r="5"/><rect x="4" y="6" width="18" height="15" rx="2"/><path d="M10 6 L10 4 L16 4 L16 6"/><circle cx="20" cy="9" r="1.2" fill="currentColor" stroke="none"/></svg>
+      <div class="team-photo-frame">
+        <img class="team-photo" src="https://raw.githubusercontent.com/hipotezyum-arch/torqua-verce/refs/heads/main/ibrah.jpg" alt="Fotoğraf ve Video uzmanı (temsili fotoğraf)" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="team-icon-wrap" style="display:none;">
+          <svg viewBox="0 0 26 26"><circle cx="13" cy="13" r="5"/><rect x="4" y="6" width="18" height="15" rx="2"/><path d="M10 6 L10 4 L16 4 L16 6"/><circle cx="20" cy="9" r="1.2" fill="currentColor" stroke="none"/></svg>
+        </div>
       </div>
-      <div class="team-role">Kurumsal İletişim</div>
-      <h3 class="team-name">Medya, Kriz ve İletişim</h3>
-      <div class="team-skills"><span class="team-skill">Basın</span><span class="team-skill">Kriz</span><span class="team-skill">Sosyal Medya</span></div>
+      <div class="team-role">İbrahim</div>
+      <h3 class="team-name">Tasarım ve Video</h3>
+      <div class="team-skills"><span class="team-skill">Kurumsal Çekim</span><span class="team-skill">Prodüksiyon</span><span class="team-skill">Sosyal Medya</span></div>
     </div>
     <div class="team-card reveal">
-      <div class="team-icon-wrap">
-        <svg viewBox="0 0 26 26"><path d="M13 4 C8 4 5 8 5 12 C5 16 8 18 10 19 L10 22 L16 22 L16 19 C18 18 21 16 21 12 C21 8 18 4 13 4Z"/><line x1="10" y1="22" x2="16" y2="22"/></svg>
+      <div class="team-photo-frame">
+        <img class="team-photo" src="https://raw.githubusercontent.com/hipotezyum-arch/torqua-verce/refs/heads/main/esra.jpg" alt="AI Uzmanı (temsili fotoğraf)" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="team-icon-wrap" style="display:none;">
+          <svg viewBox="0 0 26 26"><path d="M13 4 C8 4 5 8 5 12 C5 16 8 18 10 19 L10 22 L16 22 L16 19 C18 18 21 16 21 12 C21 8 18 4 13 4Z"/><line x1="10" y1="22" x2="16" y2="22"/></svg>
+        </div>
       </div>
-      <div class="team-role">Dijital</div>
-      <h3 class="team-name">Görsel İletişim Uzmanı</h3>
-      <div class="team-skills"><span class="team-skill">Video Prodüksiyon</span><span class="team-skill">Yapay Zeka</span><span class="team-skill">Tasarım</span></div>
+      <div class="team-role">Esra</div>
+      <h3 class="team-name">Kurumsal İletişim</h3>
+      <div class="team-skills"><span class="team-skill">İçerik Otomasyonu</span><span class="team-skill">Chatbot</span><span class="team-skill">Dashboard</span></div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-photo-frame">
+        <img class="team-photo" src="https://raw.githubusercontent.com/hipotezyum-arch/torqua-verce/refs/heads/main/davut.jpg" alt="Marka Stratejisti (temsili fotoğraf)" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="team-icon-wrap" style="display:none;">
+          <svg viewBox="0 0 26 26"><circle cx="13" cy="13" r="10"/><circle cx="13" cy="13" r="5"/><circle cx="13" cy="13" r="1.2" fill="currentColor" stroke="none"/></svg>
+        </div>
+      </div>
+      <div class="team-role">Davut</div>
+      <h3 class="team-name">Marka Stratejisti</h3>
+      <div class="team-skills"><span class="team-skill">Marka Konumlandırma</span><span class="team-skill">Müşteri İlişkileri</span><span class="team-skill">Proje Yönetimi</span></div>
     </div>
   </div>
 </section>
@@ -1129,9 +1192,12 @@
 
     <div class="ref-card reveal">
       <div class="ref-logo-row">
-        <div class="ref-logo-placeholder">T</div>
+        <div class="ref-logo-frame">
+          <img class="ref-logo-img" src="LOGO_ADRESİ_EKLE_1" alt="Tekstil A.Ş. logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="ref-logo-placeholder" style="display:none;">T</div>
+        </div>
         <div>
-          <div class="ref-company">Kipaş Tekstil A.Ş.</div>
+          <div class="ref-company">Tekstil A.Ş.</div>
           <div class="ref-sector">Üretim · Kahramanmaraş</div>
         </div>
       </div>
@@ -1146,10 +1212,13 @@
 
     <div class="ref-card reveal">
       <div class="ref-logo-row">
-        <div class="ref-logo-placeholder">G</div>
+        <div class="ref-logo-frame">
+          <img class="ref-logo-img" src="LOGO_ADRESİ_EKLE_2" alt="Gıda Grubu logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="ref-logo-placeholder" style="display:none;">G</div>
+        </div>
         <div>
-          <div class="ref-company">Carbon Kurubuz A.Ş.</div>
-          <div class="ref-sector">Üretim · Bursa</div>
+          <div class="ref-company">Gıda Grubu</div>
+          <div class="ref-sector">Üretim · Kahramanmaraş</div>
         </div>
       </div>
       <div class="ref-divider"></div>
@@ -1163,22 +1232,26 @@
 
     <div class="ref-card reveal">
       <div class="ref-logo-row">
-        <div class="ref-logo-placeholder">H</div>
+        <div class="ref-logo-frame">
+          <img class="ref-logo-img" src="LOGO_ADRESİ_EKLE_3" alt="İnşaat Holding logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="ref-logo-placeholder" style="display:none;">H</div>
+        </div>
         <div>
-          <div class="ref-company">Zeytin Yağ</div>
-          <div class="ref-sector">Gıda · Kahramanmaraş</div>
+          <div class="ref-company">İnşaat Holding</div>
+          <div class="ref-sector">İnşaat · Kahramanmaraş</div>
         </div>
       </div>
       <div class="ref-divider"></div>
       <div class="ref-work-label">Yaptığımız İş</div>
-      <p class="ref-work-desc">Sosyal Medya, basın ilişkileri yönetimi ve kurumsal fotoğraf-video prodüksiyonu.</p>
+      <p class="ref-work-desc">Kriz iletişimi planı hazırlama, basın ilişkileri yönetimi ve kurumsal fotoğraf-video prodüksiyonu.</p>
       <div class="ref-result">
         <span class="ref-result-num">5</span>
         <span class="ref-result-label">uzman tek koordinasyonda</span>
       </div>
     </div>
 
-
+  </div>
+  <p class="ref-note reveal">* Referans bilgileri temsili olarak gösterilmektedir, gerçek müşteri verileriyle güncellenecektir.</p>
 </section>
 
 <!-- PROJELER -->
@@ -1189,25 +1262,27 @@
 
     <div class="project-card reveal">
       <div class="project-thumb">
+        <img class="project-thumb-img" src="https://picsum.photos/seed/torquar-behance/800/450" alt="Marka kimliği ve görsel tasarım çalışmaları (temsili görsel)" onerror="this.style.display='none'; this.nextElementSibling.nextElementSibling.style.display='block';">
         <span class="project-platform-badge">Behance</span>
-        <svg viewBox="0 0 44 44"><rect x="6" y="6" width="32" height="32" rx="3"/><line x1="6" y1="14" x2="38" y2="14"/><circle cx="11" cy="10" r="1.5" fill="currentColor" stroke="none"/><circle cx="16" cy="10" r="1.5" fill="currentColor" stroke="none"/><line x1="14" y1="22" x2="30" y2="22"/><line x1="14" y1="27" x2="26" y2="27"/></svg>
+        <svg style="display:none;" viewBox="0 0 44 44"><rect x="6" y="6" width="32" height="32" rx="3"/><line x1="6" y1="14" x2="38" y2="14"/><circle cx="11" cy="10" r="1.5" fill="currentColor" stroke="none"/><circle cx="16" cy="10" r="1.5" fill="currentColor" stroke="none"/><line x1="14" y1="22" x2="30" y2="22"/><line x1="14" y1="27" x2="26" y2="27"/></svg>
       </div>
       <div class="project-body">
         <h3 class="project-title">Marka Kimliği & Görsel Tasarım Çalışmaları</h3>
         <p class="project-desc">Logo tasarımları, kurumsal kimlik setleri ve görsel dil çalışmalarımızın tüm detaylarını Behance profilimizde inceleyebilirsiniz.</p>
-        <a href="https://www.behance.net/davutcona" target="_blank" rel="noopener" class="project-link">Behance'te İncele →</a>
+        <a href="https://www.behance.net" target="_blank" rel="noopener" class="project-link">Behance'te İncele →</a>
       </div>
     </div>
 
     <div class="project-card reveal">
       <div class="project-thumb">
+        <img class="project-thumb-img" src="https://picsum.photos/seed/torquar-youtube/800/450" alt="Kurumsal video ve prodüksiyon örnekleri (temsili görsel)" onerror="this.style.display='none'; this.nextElementSibling.nextElementSibling.style.display='block';">
         <span class="project-platform-badge">YouTube</span>
-        <svg viewBox="0 0 44 44"><rect x="4" y="10" width="36" height="24" rx="5"/><polygon points="19,17 19,27 29,22" fill="currentColor" stroke="none"/></svg>
+        <svg style="display:none;" viewBox="0 0 44 44"><rect x="4" y="10" width="36" height="24" rx="5"/><polygon points="19,17 19,27 29,22" fill="currentColor" stroke="none"/></svg>
       </div>
       <div class="project-body">
         <h3 class="project-title">Kurumsal Video & Prodüksiyon Örnekleri</h3>
         <p class="project-desc">Müşterilerimiz için ürettiğimiz tanıtım filmleri, kurumsal videolar ve sosyal medya içeriklerini YouTube kanalımızdan izleyebilirsiniz.</p>
-        <a href="https://www.youtube.com/@torquar-tr" target="_blank" rel="noopener" class="project-link">YouTube'da İzle →</a>
+        <a href="https://www.youtube.com/@davutcona" target="_blank" rel="noopener" class="project-link">YouTube'da İzle →</a>
       </div>
     </div>
 
@@ -1222,7 +1297,7 @@
   <div class="reveal"><a href="https://wa.me/905382060452" class="btn-primary">Bilgi Talep Et</a></div>
   <div style="margin-top:32px;" class="reveal">
     <div class="cta-social">
-      <a href="https://www.youtube.com/@torquar-tr" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
+      <a href="https://www.youtube.com/@davutcona" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
         <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><polygon points="10,9 16,12 10,15" stroke="none" style="fill:rgba(210,177,143,0.55)" class="yt-play"/></svg>
       </a>
       <a href="https://www.instagram.com/torquar_" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
@@ -1247,7 +1322,7 @@
     <a href="https://wa.me/905382060452">İletişim</a>
   </div>
   <div class="social-links">
-    <a href="https://www.youtube.com/@torquar-tr" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
+    <a href="https://www.youtube.com/@davutcona" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
       <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><polygon points="10,9 16,12 10,15" stroke="none" style="fill:rgba(210,177,143,0.55)" class="yt-play"/></svg>
     </a>
     <a href="https://www.instagram.com/torquar_" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
